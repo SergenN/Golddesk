@@ -1,4 +1,24 @@
 <?php
+/*
+ * Filename:        login_main.php
+ * Creator:         Michaël van der Veen
+ * Creation Date:   16/06/2015
+ * Last Edited:     19/06/2015
+ * ------------------------------------- 
+ * Description:     
+ *      In deze file wordt de login 
+ *      formulier weergegeven. Hierin kan 
+ *      men inloggen op de website
+ *      om hieraan restricte pagina's
+ *      te bezoeken.
+ * 
+ * -------------------------------------
+ * Changelog: 
+ *  v1.0
+ *      Opstelling van de formulier en
+ *      codering 
+ * 
+ */
 $_SESSION['timestamp']=time();
 ?>
 <table width="300" border="0" align="center" cellpadding="0" cellspacing="1" bgcolor="#CCCCCC">
