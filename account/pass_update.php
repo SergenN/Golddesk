@@ -2,7 +2,7 @@
 session_start();
 $php_only = true;
 $secure;
-include_once'../components/header.php';
+include_once'../components/secure_header.php';
 /*
  * Filename:        pass_update.php
  * Creator:         Michaël van der Veen
