@@ -12,6 +12,7 @@
  * 19-6-2015 13.00 uur: bestand aangemaakt
  * 19-6-2015 13.27 uur: functies getUsers() en displayUsers() toegevoegd
  * 19-6-2015 14.44 uur: entiteitsnamen aangepast aan huidige staat
+ * 19-6-2015 15.18 uur: push naar Sergen
  *
  */
 session_start();
@@ -62,10 +63,11 @@ function displayUsers($result)
             // hier data weergeven in tabel
             // VERGEET NIET DE ENTITEITNAMEN ACHTERAF AAN TE PASSEN!
             echo '<tr>';
-            echo '<td>' . '$row["user_id"]' . '</td>';
-            echo '<td>' . '$row["user_name"]' . '</td>';
-            echo '<td>' . '$row["user_email"]' . '</td>';
-            echo '<td>' . '$row["user_last_login"]' . '</td>';
+            echo '<td>' . '$row["id"]' . '</td>';
+            echo '<td>' . '$row["name"]' . '</td>';
+            echo '<td>' . '$row["email"]' . '</td>';
+            echo '<td>' . '$row["last_login"]' . '</td>';
+            // moet onderstaande wel zo???
             echo '<td><button class="btn btn-default" type="button" formaction="user_info.php" name=' . $row["user_id"] . ' value="Meer informatie"></button></td>';
             echo '</tr>';
         }
@@ -77,6 +79,9 @@ function displayUsers($result)
         // er zijn geen gebruikers gevonden
         echo "Er zijn geen gebruikers gevonden.";
     }
+
+    getUsers($link);
+    displayUsers($result);
 }
 // hier het liefste een knop naar het bestand voor het maken van een nieuwe user
 
