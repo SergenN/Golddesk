@@ -35,7 +35,7 @@ include'../components/header.php';
  */
 function getUsers($link)
 {
-    $sql = "SELECT * FROM 'user'";
+    $sql = "SELECT name, id, email, last_login FROM users";
     $result = mysqli_query($link, $sql);
     return $result;
 }
@@ -50,7 +50,6 @@ function displayUsers($result)
     if (mysqli_num_rows($result) > 0) {
         // maak een html-tabel aan
         ?>
-        <form action="user_info.php" method="post">
         <table>
             <th>ID</th>
             <th>Naam</th>
@@ -59,21 +58,18 @@ function displayUsers($result)
 
             <?php
         // per rij data weergeven
-        while ($row = mysqli_fetch_assoc($result)) {
-            // hier data weergeven in tabel
-            // VERGEET NIET DE ENTITEITNAMEN ACHTERAF AAN TE PASSEN!
-            echo '<tr>';
-            echo '<td>' . '$row["id"]' . '</td>';
-            echo '<td>' . '$row["name"]' . '</td>';
-            echo '<td>' . '$row["email"]' . '</td>';
-            echo '<td>' . '$row["last_login"]' . '</td>';
-            // moet onderstaande wel zo???
-            echo '<td><button class="btn btn-default" type="button" formaction="user_info.php" name=' . $row["user_id"] . ' value="Meer informatie"></button></td>';
-            echo '</tr>';
-        }
+            while ($row = mysqli_fetch_assoc($result)) {
+                // hier data weergeven in tabel
+                echo '<tr>';
+                echo '<td>' . $row["id"] . '</td>';
+                echo '<td>' . $row["name"] . '</td>';
+                echo '<td>' . $row["email"] . '</td>';
+                echo '<td>' . $row["last_login"] . '</td>';
+                echo '<td><button class="btn btn-default" type="button" formaction="user_info.php" name=' . $row["id"] . ' value="Meer informatie"></button></td>';
+                echo '</tr>';
+            }
             ?>
         </table>
-        </form>
         <?php
     } else {
         // er zijn geen gebruikers gevonden
