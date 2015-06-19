@@ -36,7 +36,7 @@ if($count==1){
     $_SESSION['level']=$row['access_level'];
     
     $last_login = date('c',time());
-    mysqli_query($link,"UPDATE gebruikers SET last_login='$last_login' WHERE id='".$_SESSION['id']."' LIMIT 1");
+    mysqli_query($link,"UPDATE users SET last_login='$last_login' WHERE id='".$_SESSION['id']."' LIMIT 1");
     
     $_SESSION['success'] = "Je bent successvol ingelogd ".$_SESSION['myname'];
     header("Location:/index.php");

@@ -1,8 +1,9 @@
 <?php
 
 function secure($input){
+    global $link;
     $input = stripslashes($input);
-    $input = mysql_real_escape_string($input);
+    $input = mysqli_real_escape_string($link,$input);
     return $input;
 }
 

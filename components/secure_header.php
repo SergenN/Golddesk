@@ -1,5 +1,4 @@
 <?php 
-include'connection.php';
 if(!isset($_SESSION["myusername"])){
     $_SESSION['REQUEST_URI'] = $_SERVER['REQUEST_URI']; 
     header("location:/login/index.php");
@@ -15,5 +14,11 @@ if(!isset($_SESSION["myusername"])){
         $_SESSION['timestamp']=time();
     }
 }
+if(isset($secure)){
+    if($_SESSION['secure']<$secure){
+        exit("<a href='/index.php'>404-page not found return here: </a>");
+    }
+}
+
 include 'header.php';
 ?>
