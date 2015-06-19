@@ -1,6 +1,28 @@
 <?php 
-$
-$title
+/*
+ * Filename:        menu.php
+ * Creator:         Michaël van der Veen
+ * Creation Date:   16/06/2015
+ * Last Edited:     19/06/2015
+ * ------------------------------------- 
+ * Description:     
+ *      In deze file wordt de menu
+ *      weergegeven hieraan worden links
+ *      naar andere pagina's opgeslagen
+ *      en herbruikt bij elke pagina
+ *      om de gebruikersgemak te verhogen
+ * 
+ *      vanuit deze pagina wordt gecheckt
+ *      of je wel of niet bent ingelogd.
+ *      Ben je dit wel? dan zie je een 
+ *      account / logout menuitem.
+ *      Anders zie je een login menuitem.
+ * -------------------------------------
+ * Changelog: 
+ *  v1.0
+ *      Opstelling van de menu en codering
+ */
+$title;
 
 ?>
 <nav class="narbar navbar-inverse navbar-static-top" role="navigation">

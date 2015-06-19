@@ -17,8 +17,7 @@ include_once'../components/header.php';
  * -------------------------------------
  * Changelog: 
  *  v1.0
- *      Opstelling van de formulier en
- *      codering
+ *      Opstelling van de codering.
  *  v1.1
  *      overzetten van mysql naar mysqli    
  * 

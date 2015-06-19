@@ -1,4 +1,35 @@
 <?php 
+/*
+ * Filename:        header.php
+ * Creator:         Michaël van der Veen
+ * Creation Date:   16/06/2015
+ * Last Edited:     19/06/2015
+ * ------------------------------------- 
+ * Description:     
+ *      In deze file wordt de header 
+ *      weergegeven en de connectie met
+ *      de database geset. 
+ *      Ook zal het de vooraf gestelde 
+ *      variablen checken of de pagina
+ *      alleen voor php of php met html
+ *      doeleinden heeft.
+ *      Als het een php_only doeleind 
+ *      heeft, dan zal die geen html 
+ *      weergeven.
+ * 
+ *      Als er vooral een $title is 
+ *      gedefineerd dan wordt dit in 
+ *      de header gezet samen met de 
+ *      titel.
+ * -------------------------------------
+ * Changelog: 
+ *  v1.0
+ *      Opstelling van de header en
+ *      codering
+ *  v1.1
+ *      overzetten van mysql naar mysqli    
+ * 
+ */
 $dbhost="rdbms.strato.de";
 $dbuser="U2174000";
 $dbpasswoord="ditisgeenfietsrec1";
