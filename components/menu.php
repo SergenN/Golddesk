@@ -35,20 +35,20 @@ $title;
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/index.php">Golddesk</a>
+      <a class="navbar-brand" href="/index.php"><img src="/img/GDlogoM.jpg" alt="Golddesk"/>Golddesk</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li <?php if($title=="home"){; echo 'class="active"';}?> ><a href="/index.php">Home</a></li>
-        <?php if($_SESSION['level']==(1||2) ){?>
+        <?php if($_SESSION['secure']>=1){?>
         
-        <li <?php if($title=="ticket"){; echo 'class="active"';}?>><a href="/ticket/index.php">nieuw ticket</a></li>
+        <li <?php if($title=="Tickets"){; echo 'class="active"';}?>><a href="/ticket/index.php">Tickets</a></li>
         <?php }  ?>
         
         <?php  if(isset($_SESSION['id'])){?>
-            <li <?php if($title=="Account"){; echo 'class="active"';}?>><a href="/account/index.php">Account</a></li>
+            <li <?php if($title=="Account"){; echo 'class="active"';}?>><a href="/account/index.php">Mijn Account</a></li>
             <li <?php if($title=="logout"){; echo 'class="active"';}?>><a href="/login/login_logout.php">Logout</a></li>
         <?php }else{?>
             <li <?php if($title=="login"){; echo 'class="active"';}?>><a href="/login/index.php">Login</a></li>

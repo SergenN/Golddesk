@@ -27,7 +27,11 @@
  *      Opstelling van de header en
  *      codering
  *  v1.1
- *      overzetten van mysql naar mysqli    
+ *      overzetten van mysql naar mysqli  
+ *  v1.1.1
+ *      bodyclass aangepast, van offspan 2 
+ *      naar offspan 1, met col-md-8 naar 
+ *      col-md-10  
  * 
  */
 $dbhost="rdbms.strato.de";
@@ -64,7 +68,7 @@ if(!isset($php_only)){?>
         </head>
         <body>
         <?php include'menu.php';?>
-        <div class='col-md-offset-2 col-md-8'>
+        <div class='col-md-offset-1 col-md-10'>
         <?php 
         error_message();
 }

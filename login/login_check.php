@@ -47,7 +47,7 @@ if($count==1){
     // Register $myusername, $mypassword and redirect to file "../index.php"
     $_SESSION['myusername']=$myusername;
     $_SESSION['id']=$myid;
-    $_SESSION['secure']=$row['access_level'];
+    $_SESSION['secure']=$row['level'];
     
     $last_login = date('c',time());
     mysqli_query($link,"UPDATE users SET `last_login`=NOW() WHERE `id`='".$_SESSION['id']."' LIMIT 1");
