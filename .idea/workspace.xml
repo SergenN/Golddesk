@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5f2b02d-9ab3-48e2-8a93-75bcddc96013" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/user_overview.php" afterPath="$PROJECT_DIR$/admin/user_overview.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Golddesk.iws" />
@@ -321,12 +320,18 @@
       <option name="project" value="LOCAL" />
       <updated>1434721404925</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Bijwerken van user_overview, toevoegen van user_info&#10;&#10;Pagina's bijgewerkt. Qua styling moet er nog wat gedaan worden, maar de functionaliteit is er.">
+      <created>1434807263167</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1434807263167</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -335,7 +340,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10520833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10520833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32913387" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -369,7 +374,8 @@
     <MESSAGE value="Test&#10;&#10;Bevat nieuwe data voor admin." />
     <MESSAGE value="Voor Sergen&#10;&#10;user_overview.php concept" />
     <MESSAGE value="Grove fouten hersteld&#10;&#10;Fouten mbt query hersteld" />
-    <option name="LAST_COMMIT_MESSAGE" value="Grove fouten hersteld&#10;&#10;Fouten mbt query hersteld" />
+    <MESSAGE value="Bijwerken van user_overview, toevoegen van user_info&#10;&#10;Pagina's bijgewerkt. Qua styling moet er nog wat gedaan worden, maar de functionaliteit is er." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bijwerken van user_overview, toevoegen van user_info&#10;&#10;Pagina's bijgewerkt. Qua styling moet er nog wat gedaan worden, maar de functionaliteit is er." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
