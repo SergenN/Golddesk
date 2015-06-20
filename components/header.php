@@ -66,9 +66,9 @@ if(!isset($php_only)){?>
             <meta lang="nl" />
             <meta charset="UTF-8">
         </head>
-        <body>
+        <body class="bg-warning">
         <?php include'menu.php';?>
-        <div class='col-md-offset-1 col-md-10'>
+        <div class='col-md-offset-1 col-md-10' style="background-color: white">
         <?php 
         error_message();
 }
