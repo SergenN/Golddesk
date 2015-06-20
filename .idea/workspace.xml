@@ -326,7 +326,13 @@
       <option name="project" value="LOCAL" />
       <updated>1434807263167</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="user_info bijgewerkt&#10;&#10;Paar kleine wijzigingen">
+      <created>1434807315171</created>
+      <option name="number" value="00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1434807315171</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -375,7 +381,8 @@
     <MESSAGE value="Voor Sergen&#10;&#10;user_overview.php concept" />
     <MESSAGE value="Grove fouten hersteld&#10;&#10;Fouten mbt query hersteld" />
     <MESSAGE value="Bijwerken van user_overview, toevoegen van user_info&#10;&#10;Pagina's bijgewerkt. Qua styling moet er nog wat gedaan worden, maar de functionaliteit is er." />
-    <option name="LAST_COMMIT_MESSAGE" value="Bijwerken van user_overview, toevoegen van user_info&#10;&#10;Pagina's bijgewerkt. Qua styling moet er nog wat gedaan worden, maar de functionaliteit is er." />
+    <MESSAGE value="user_info bijgewerkt&#10;&#10;Paar kleine wijzigingen" />
+    <option name="LAST_COMMIT_MESSAGE" value="user_info bijgewerkt&#10;&#10;Paar kleine wijzigingen" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
