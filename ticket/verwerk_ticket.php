@@ -4,6 +4,7 @@ $title = "Tickets";
 $secure=0;
 $php_only="s";
 include'../components/secure_header.php';
+ini_set('file_uploads', 'On');
 /*
  * Filename:        index.php
  * Creator:         Michaël van der Veen
@@ -23,6 +24,9 @@ include'../components/secure_header.php';
  *  v1.1
  *      Ondersteuning Array van hardware/
  *      software naar database. 
+ *  v1.2
+ *      Ondersteuning voor comments +
+ *      file uploaden.
  * 
  */
  $type=secure($_POST['type']);
@@ -58,10 +62,71 @@ include'../components/secure_header.php';
     }
     header('location:index.php');
  }elseif($_POST['type']=="comment"){
-     $text = $_POST['comment'];
-     nl2br($text);
-     echo $text;
+     $text = nl2br($_POST['comment']);
+    
+                $target_dir = "../files/".$_POST['id']."/";
+                $target_file = $target_dir . basename($_FILES["file"]["name"]);
+                $uploadOk = 1;
+                $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+                $FileName = pathinfo($target_file,PATHINFO_FILENAME);
+                $sqlfilename = $_FILES['file']['name'];
+                
+                // Check if file already exists
+                if (file_exists($target_file)) {
+                    for($i=1;$i<10;$i++){
+                        $newname = (string)$FileName.$i;
+                        $target_file = $target_dir.$newname.".".$imageFileType;
+                        $sqlfilename = $newname.".".$imageFileType;
+                        if(!file_exists($target_file)){
+                            break;
+                        }
+                        if($i>=9){$_SESSION['error'] = "Sorry, file already exists.";
+                    $uploadOk = 0;}
+                    }
+                    
+                }
+                // Check file size
+                if ($_FILES["file"]["size"] > 500000) {
+                    $_SESSION['error'] = "Sorry, your file is too large.";
+                    $uploadOk = 0;
+                }
+                // Allow certain file formats
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                && $imageFileType != "gif" && $imageFileType != "doc" && $imageFileType != "docx" 
+                && $imageFileType != "pdf" && $imageFileType != "pptx"&& $imageFileType != "ppt"
+                && $imageFileType != "log" && $imageFileType != "txt" && $imageFileType != "mp3"
+                && $imageFileType != "wav" && $imageFileType != "wma" && $imageFileType != "mp4"
+                && $imageFileType != "avi" && $imageFileType != "flv" && $imageFileType != "mpg"
+                && $imageFileType != "xls" && $imageFileType != "xlsx"&& $imageFileType != "accdb" 
+                && $imageFileType != "zip" && $imageFileType != "zipx"&& $imageFileType != "rar") {
+                    $_SESSION['error'] = "Sorry, the file is not allowed.";
+                    $uploadOk = 0;
+                }
+                // Check if $uploadOk is set to 0 by an error
+                if ($uploadOk == 0) {
+
+                // if everything is ok, try to upload file
+                } else {
+                    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+                        $_SESSION['success'] = "The file ". basename( $_FILES["file"]["name"]). " has been uploaded.";
+                    } else {
+                        $_SESSION['error'] = "Sorry, there was an error uploading your file.";
+                    }
+                }
+    
+     if(isset($_FILES['file'])){
+         $query = "INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                VALUES ('".$_SESSION['id']."',NOW(),'".$sqlfilename."','file','".$_POST['secure']."','".$_POST['id']."')";
+         mysqli_query($link, $query);
+     }
+     if(!empty($_POST['comment'])){
+         $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                    VALUES ('".$_SESSION['id']."',NOW(),'".$text."','comment','".$_POST['secure']."','".$_POST['id']."') ";
+         mysqli_query($link, $query);
+         
+     }
+     $_SESSION['page_id']=$_POST['id'];
+     header('location:ticket.php');
  }
- echo "<br> dit is de laatste<br>";
- print_r($_POST);
+ 
 ?>

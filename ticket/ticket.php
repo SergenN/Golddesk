@@ -3,6 +3,7 @@ session_start();
 $title = "Tickets";
 $secure=0;
 include'../components/secure_header.php';
+ini_set('file_uploads', 'On');
 /*
  * Filename:        index.php
  * Creator:         Michaël van der Veen
@@ -22,9 +23,12 @@ include'../components/secure_header.php';
  *  v1.1
  *      Select Multiple in de Software/
  *      hardware selectie.
+ *  v1.2
+ *      ondersteuning voor inzien en 
+ *      comment. en file uploaden.
  * 
  */
-if(!isset($_POST['id'])){
+if(!isset($_POST['id'])&&!isset($_SESSION['page_id'])){
     ?>
     <div class="col-md-3">
 
@@ -116,6 +120,10 @@ if(!isset($_POST['id'])){
      * TICKET VIEW
      * 
      */
+     if(isset($_SESSION['page_id'])){
+         $_POST['id']=$_SESSION['page_id'];
+         unset($_SESSION['page_id']);
+     }
      $query ="SELECT `tickets`.`id` AS `id`, 
         `users`.`firstname` AS `firstname`, 
         `users`.`lastname` AS `lastname`,
@@ -147,7 +155,7 @@ if(!isset($_POST['id'])){
         <br>
     </div>
     <br>
-    <form action="verwerk_ticket.php" method="post">
+    <form action="verwerk_ticket.php" enctype="multipart/form-data" method="post">
         <!-- Static info -->
         <div class="col-md-12">
             <div class="col-md-3">
@@ -182,7 +190,7 @@ if(!isset($_POST['id'])){
             <div class="col-md-9 ">
                 
                 <?php
-                echo "<div class='panel panel-default panel-body'>".$row['description']."</div>";
+                echo "<div class='panel panel-default panel-body'>".$row['description']."</div><div style='max-height: 500px; overflow-y: scroll;'>";
                     $query = "SELECT `notifications`.`creation_date` AS `creation_date`,
                                 `notifications`.`content` AS `content`,
                                 `notifications`.`privacy` AS `privacy`,
@@ -197,16 +205,17 @@ if(!isset($_POST['id'])){
                     while($row=mysqli_fetch_assoc($result)){
                         echo comment($row['firstname']." ".$row['lastname'],$row['creation_date'],$row['type'],$row['content'],$_POST['id']).'<hr>';
                     };?>
+                    </div>
                     <div>
                         nieuw reactie:
                         
-                        <form action="verwerk_ticket.php" method="post">
+                                                   
                             <textarea  type="text" id="text" name="comment" wrap="hard" class="form-control" rows="10"></textarea><br>
-                            
+                            <input name="id" value="<?php echo $_POST['id']; ?>"  class="hidden"/>
                             
                             
                             <div class="form-inline">
-                                <input type="file" class="form-control"/>
+                                <input type="file" name="file" class="form-control"/>
                                 <?php if($_SESSION['secure']>=1){
                                      echo '
                                 <label>
@@ -216,7 +225,7 @@ if(!isset($_POST['id'])){
                                 <button  type="submit" name="type" value="comment" class="btn btn-default navbar-right">Verstuur</button>
                                 
                             </div>
-                        </form>
+                        
                     </div>
             </div>
         </div>
