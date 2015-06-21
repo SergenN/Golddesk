@@ -27,6 +27,9 @@ ini_set('file_uploads', 'On');
  *  v1.2
  *      Ondersteuning voor comments +
  *      file uploaden.
+ *  v1.2.1
+ *      maakt nu mappen aan als deze niet
+ *      bestaat.
  * 
  */
  $type=secure($_POST['type']);
@@ -102,6 +105,11 @@ ini_set('file_uploads', 'On');
                     $_SESSION['error'] = "Sorry, the file is not allowed.";
                     $uploadOk = 0;
                 }
+                
+                if (!file_exists('../files/'.$_POST['id'])) {
+                    mkdir('../files/'.$_POST['id'], 0777, true);
+                }
+                
                 // Check if $uploadOk is set to 0 by an error
                 if ($uploadOk == 0) {
 
