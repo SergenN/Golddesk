@@ -66,7 +66,7 @@ ini_set('file_uploads', 'On');
     header('location:index.php');
  }elseif($_POST['type']=="comment"){
      $text = nl2br($_POST['comment']);
-    
+            if(!empty($_FILES['file']['name'])){
                 $target_dir = "../files/".$_POST['id']."/";
                 $target_file = $target_dir . basename($_FILES["file"]["name"]);
                 $uploadOk = 1;
@@ -117,16 +117,15 @@ ini_set('file_uploads', 'On');
                 } else {
                     if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
                         $_SESSION['success'] = "The file ". basename( $_FILES["file"]["name"]). " has been uploaded.";
+                        $query = "INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                            VALUES ('".$_SESSION['id']."',NOW(),'".$sqlfilename."','file','".$_POST['secure']."','".$_POST['id']."')";
+                        mysqli_query($link, $query);
                     } else {
                         $_SESSION['error'] = "Sorry, there was an error uploading your file.";
                     }
                 }
+            }
     
-     if(isset($_FILES['file'])){
-         $query = "INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
-                VALUES ('".$_SESSION['id']."',NOW(),'".$sqlfilename."','file','".$_POST['secure']."','".$_POST['id']."')";
-         mysqli_query($link, $query);
-     }
      if(!empty($_POST['comment'])){
          $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
                     VALUES ('".$_SESSION['id']."',NOW(),'".$text."','comment','".$_POST['secure']."','".$_POST['id']."') ";
