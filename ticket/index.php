@@ -21,24 +21,28 @@ include'../components/secure_header.php';
  *      codering  
  *  v1.1
  *      Pagina selectie + Nuttiger query 
+ *  v1.1.1 
+ *      dubbele waarde opgelost
  * 
  */
 ?>
 <div class="col-md-3">
 
     <img src="/img/golddesk.jpg" width="100%"/>
-</div><div class="col-md-9">
-<h1>Welkom bij Golddesk Support</h1>
-<br>
-Met Golddesk kunt u eenvoudig hulp tickets aanmaken en beheren. Wanneer u 
-een ticket heeft aangemaakt zal deze binnen 1 tot 365 werkdagen worden 
-behandeld (366 in een schrikkeljaar).<br> 
-<br> 
-Op deze pagina kunt u uw tickets beheren, klik op een ticket voor meer 
-informatie en om commentaar te plaatsen
-<br>
-<br>
-<a href="nieuw_ticket.php" class="btn btn-default navbar-right">Maak een nieuwe ticket aan</a></div>
+</div>
+<div class="col-md-9">
+    <h1>Welkom bij Golddesk Support</h1>
+    <br>
+    Met Golddesk kunt u eenvoudig hulp tickets aanmaken en beheren. Wanneer u 
+    een ticket heeft aangemaakt zal deze binnen 1 tot 365 werkdagen worden 
+    behandeld (366 in een schrikkeljaar).<br> 
+    <br> 
+    Op deze pagina kunt u uw tickets beheren, klik op een ticket voor meer 
+    informatie en om commentaar te plaatsen
+    <br>
+    <br>
+    <a href="ticket.php" class="btn btn-default navbar-right">Maak een nieuwe ticket aan</a>
+</div>
 <br>
 <br>
 <form action="ticket.php" method="post">
@@ -101,7 +105,9 @@ informatie en om commentaar te plaatsen
             OR 1<=".$_SESSION['secure'];
         if($_SESSION['secure']>=1){$query.=
             " OR `assigned`=0";}
-        $query.=" ORDER BY `status` ASC, `creation_date` DESC, `id` DESC 
+        $query.=" 
+        GROUP BY `id`
+        ORDER BY `last_update` DESC,`creation_date` DESC, `id` DESC 
         LIMIT 10 OFFSET ".$offset;
         $result = mysqli_query($link, $query);
         while($row=mysqli_fetch_assoc($result)){
@@ -134,6 +140,7 @@ informatie en om commentaar te plaatsen
 
 
 <?php 
+    echo $query;
     $query = "SELECT COUNT(*) AS 'counted' FROM `tickets` WHERE `creator`='".$_SESSION['id']."' OR `assigned`='".$_SESSION['id']."' OR 1<=".$_SESSION['secure'];
         if($_SESSION['secure']>=1){$query.=" OR `assigned`=0";}
     $result=mysqli_query($link, $query);

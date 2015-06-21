@@ -21,7 +21,8 @@
 
 ?>        
         </div>
-        <div class="bg-warning col-md-12">
+        <div class="bg-warning col-md-12 footer">
+            <hr>
             &#169; 2015 Goldhill Publishing & Promich.nl  
         </div>
     </body>

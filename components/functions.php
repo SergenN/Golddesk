@@ -43,5 +43,33 @@ function error_message(){
     };
 }
 
+function comment($naam,$tijd,$type,$description,$id){
+    
+         
+   $info = '<b>'.$naam.'</b><br>Op: '.$tijd.'<br></div><div class="col-md-8">';
+            
+            switch($type){
+                case "info":
+                    echo '<div class="col-md-12 panel panel-info"><div class="col-md-4 panel-heading">'
+                    .$info;
+                    echo $description;
+                    break;
+                case "comment":
+                    echo '<div class="col-md-12 panel panel-warning"><div class="col-md-4 panel-heading">'
+                    .$info;
+                    echo $description;
+                    break;
+                case "file":
+                    echo '<div class="col-md-12 panel panel-success"><div class="col-md-4 panel-heading">'
+                    .$info;
+                    echo '<a target="_blank" class="btn btn-default" href="/files/'.$id.'/'.$description.'">'.$description.'</a>';
+            }
+            
+            ?>
+            </div>
+        </div><br>
+        <?php
+}
+
 
 ?>
