@@ -85,15 +85,23 @@ include'../components/secure_header.php';
             `status`.`text` AS `status`,
             (SELECT `notifications`.`creation_date`
                 FROM `notifications`
-                WHERE `notifications`.`ticket_id` = `tickets`.`id`
+                WHERE `notifications`.`ticket_id` = `tickets`.`id` 
+                    AND `notifications`.`privacy`<='".$_SESSION['secure']."'
+                ORDER BY `creation_date` DESC
                 LIMIT 1)                AS `last_update`,
             (SELECT`users`.`firstname` 
                 FROM `users`
-                WHERE `users`.`id`=`notifications`.`user`
+                LEFT JOIN `notifications` ON `notifications`.`user`=`users`.`id` 
+                WHERE `users`.`id`=`notifications`.`user` AND `notifications`.`ticket_id`=`tickets`.`id`
+                    AND `notifications`.`privacy`<='".$_SESSION['secure']."'
+                ORDER BY `creation_date` DESC
                 LIMIT 1)    AS `firstname_comment`,
             (SELECT `users`.`lastname` 
                 FROM `users`
-                WHERE `users`.`id`=`notifications`.`user`
+                LEFT JOIN `notifications` ON `notifications`.`user`=`users`.`id` 
+                WHERE `users`.`id`=`notifications`.`user` AND `notifications`.`ticket_id`=`tickets`.`id`
+                    AND `notifications`.`privacy`<='".$_SESSION['secure']."'
+                ORDER BY `creation_date` DESC
                 LIMIT 1     )AS `lastname_comment`
             
         FROM `tickets` 

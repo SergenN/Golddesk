@@ -42,7 +42,7 @@ $title;
     <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li <?php if($title=="home"){; echo 'class="active"';}?> ><a href="/index.php">Home</a></li>
-        <?php if($_SESSION['secure']>=1){?>
+        <?php if($_SESSION['secure']>=0){?>
         
         <li <?php if($title=="Tickets"){; echo 'class="active"';}?>><a href="/ticket/index.php">Tickets</a></li>
         <?php }  ?>
