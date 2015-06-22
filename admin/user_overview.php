@@ -44,11 +44,16 @@ include'../components/header.php';
                     // per rij data weergeven
                     while ($row = mysqli_fetch_assoc($result)) {
                         // hier data weergeven in tabel
+                        if(!$row["last_login"]) {
+                            $login = "Nog nooit ingelogd";
+                        } else {
+                            $login = $row["last_login"];
+                        }
                         echo '<tr>';
                         echo '<td>' . $row["id"] . '</td>';
                         echo '<td>' . $row["name"] . '</td>';
                         echo '<td>' . $row["email"] . 'a</td>';
-                        echo '<td>' . $row["last_login"] . '</td>';
+                        echo '<td>' . $login . '</td>';
                         echo '<td><button class="btn btn-default" type="submit" formmethod="post" formaction="user_info.php" name="user_info" value=' . $row["id"] . '>Meer informatie</button></td>';
                         echo '</tr>';
                     }
