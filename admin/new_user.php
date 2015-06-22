@@ -100,7 +100,7 @@ if($check) {
     } elseif(!empty($foutmeldingen)) {
         echo "Er is iets fout gegaan:";
     } else {
-        echo "Er is iets fout gegaan tijdens het afhandelen van het toevoegen van de gebruiker.";
+        echo "Er is iets fout gegaan tijdens het toevoegen van een gebruiker.";
     }
     ?>
 </h1>
@@ -108,6 +108,10 @@ if($check) {
 
 foreach($foutmeldingen as $foutmelding) {
     echo "- " . $foutmelding . "<br>";
+}
+
+if($check) {
+    echo 'Keer terug naar de <a href="admin/index.php">homepagina</a>, of voeg nog een gebruiker <a href="admin/create_user.php">toe</a>.';
 }
 ?>
 </body>
