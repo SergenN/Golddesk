@@ -65,6 +65,18 @@ if(!isset($php_only)){?>
             <link href='/css/own.css' rel="stylesheet">
             <meta lang="nl" />
             <meta charset="UTF-8">
+            
+            <script src="../js/jquery.min.js"></script>
+            <script src="../js/bootstrap.min.js"></script>
+            <script src="../js/bootstrap.js"></script>
+            <script src="../js/collapse.js"></script>
+            <script src="../js/tooltip.js"></script>
+            <script src="../js/carousel.js"></script>
+            <script src="../js/dropdown.js"></script>
+            
+            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8">
+            <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+            
         </head>
         <body class="bg-warning">
         <?php include'menu.php';?>

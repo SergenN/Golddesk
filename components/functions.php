@@ -24,8 +24,13 @@
 //zet de waarde van `input` om naar een waarde dat tegen sql-injecties is.
 function secure($input){
     global $link;
+    //$input = stripslashes($input);
+    //$input = mysqli_real_escape_string($link,$input);
+    
+    //$input = nl2br($input);
     $input = stripslashes($input);
-    $input = mysqli_real_escape_string($link,$input);
+    $input = mysqli_real_escape_string($link, $input);
+    $input = str_replace('\r\n', "<br>", $input);
     return $input;
 }
 
@@ -43,28 +48,46 @@ function error_message(){
     };
 }
 
-function comment($naam,$tijd,$type,$description,$id){
+function comment($naam,$tijd,$type,$description,$id,$privacy){
     
          
    $info = '<b>'.$naam.'</b><br>Op: '.$tijd.'<br></div><div class="col-md-8">';
-            
-            switch($type){
-                case "info":
-                    echo '<div class="col-md-12 panel panel-info"><div class="col-md-4 panel-heading">'
-                    .$info;
-                    echo $description;
-                    break;
-                case "comment":
-                    echo '<div class="col-md-12 panel panel-warning"><div class="col-md-4 panel-heading">'
-                    .$info;
-                    echo $description;
-                    break;
-                case "file":
-                    echo '<div class="col-md-12 panel panel-success"><div class="col-md-4 panel-heading">'
-                    .$info;
-                    echo '<a target="_blank" class="btn btn-default" href="/files/'.$id.'/'.$description.'">'.$description.'</a>';
+            if($privacy==0){
+                switch($type){
+                    case "info":
+                        echo '<div class="col-md-12 panel panel-info"><div class="col-md-4 panel-heading">'
+                        .$info;
+                        echo $description;
+                        break;
+                    case "comment":
+                        echo '<div class="col-md-12 panel panel-warning"><div class="col-md-4 panel-heading">'
+                        .$info;
+                        echo $description;
+                        break;
+                    case "file":
+                        echo '<div class="col-md-12 panel panel-success"><div class="col-md-4 panel-heading">'
+                        .$info;
+                        echo '<a target="_blank" class="btn btn-default" href="/files/'.$id.'/'.$description.'">'.$description.'</a>';
+                }
+            }else{
+                switch($type){
+                    case "info":
+                        echo '<div class="col-md-12 panel panel-danger"><div class="col-md-4 panel-heading">'
+                        .$info;
+                        echo $description;
+                        break;
+                    case "comment":
+                        echo '<div class="col-md-12 panel panel-danger"><div class="col-md-4 panel-heading">'
+                        .$info;
+                        echo $description;
+                        break;
+                    case "file":
+                        echo '<div class="col-md-12 panel panel-danger"><div class="col-md-4 panel-heading">'
+                        .$info;
+                        echo '<a target="_blank" class="btn btn-default" href="/files/'.$id.'/'.$description.'">'.$description.'</a>';
+                }
+                
             }
-            
             ?>
             </div>
         </div><br>

@@ -44,9 +44,11 @@ $title;
         <li <?php if($title=="home"){; echo 'class="active"';}?> ><a href="/index.php">Home</a></li>
         <?php if($_SESSION['secure']>=0){?>
         
-        <li <?php if($title=="Tickets"){; echo 'class="active"';}?>><a href="/ticket/index.php">Tickets</a></li>
+            <li <?php if($title=="Tickets"){; echo 'class="active"';}?>><a href="/ticket/index.php">Tickets</a></li>
         <?php }  ?>
-        
+        <?php if($_SESSION['secure']==9){?>
+            <li <?php if($title=="Admin"){; echo 'class="active"';}?>><a href="/admin/index.php">Admin</a></li>
+        <?php }  ?>
         <?php  if(isset($_SESSION['id'])){?>
             <li <?php if($title=="Account"){; echo 'class="active"';}?>><a href="/account/index.php">Mijn Account</a></li>
             <li <?php if($title=="logout"){; echo 'class="active"';}?>><a href="/login/login_logout.php">Logout</a></li>

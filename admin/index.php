@@ -1,10 +1,11 @@
 <?php
 session_start();
 $title = "Admin";
-include'components/header.php';
+$secure=1;
+include'../components/secure_header.php';
 
 
 
 
-include'components/footer.php';
+include'../components/footer.php';
 ?>

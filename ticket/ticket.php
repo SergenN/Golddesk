@@ -132,7 +132,8 @@ if(!isset($_POST['id'])&&!isset($_SESSION['page_id'])){
         `tickets`.`creation_time` as `creation_time`, 
         `status`.`text` AS `status`, 
         (SELECT `users`.`firstname`FROM `users` WHERE `tickets`.`assigned`=`users`.`id`) AS `firstname_assigned`,
-        (SELECT `users`.`lastname`FROM `users` WHERE `tickets`.`assigned`=`users`.`id`) AS `lastname_assigned`
+        (SELECT `users`.`lastname`FROM `users` WHERE `tickets`.`assigned`=`users`.`id`) AS `lastname_assigned`,
+        (SELECT `users`.`id`FROM `users` WHERE `tickets`.`assigned`=`users`.`id`) AS `id_assigned`
     FROM `tickets` 
     LEFT JOIN `users` ON `tickets`.`creator`=`users`.`id` 
     LEFT JOIN `status` ON `tickets`.`status`=`status`.`id` 
@@ -162,14 +163,77 @@ if(!isset($_POST['id'])&&!isset($_SESSION['page_id'])){
                 <table class="table">
                     <tr>
                         <td>
+                            <label>Aangemaakt door:</label>
+                            <div class="form-control"><?php echo $row['firstname']." ".$row['lastname']?></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            
+                            <?php if($_SESSION['secure']>=1){ ?>
+                            <div>
+                                <label for="wijzig_status">Status</label>
+                                <select name="nieuw_status" class="form-control">
+                                    <?php 
+                                        $query_status = "SELECT * FROM `status`";
+                                        $result_status = mysqli_query($link, $query_status);
+                                        while($row_status=mysqli_fetch_assoc($result_status)){
+                                            echo "<option value='".$row_status['id']."'>".$row_status['text']."</option>";
+                                            if($row['status']==$row_status['text']){
+                                                echo "<option selected>".$row_status['text']."</option>";
+                                            }
+                                        }
+                                     ?>
+                                </select>
+                            </div>
+                            <?php }else{ ?>
                             <label for="status">status</label>
-                            <div class="form-control" ><?php echo $row['status']?></div>
+                            <div class="form-control" ><?php echo $row['status']?>
+                            </div><?php };?>
+                            
+                            
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <label for="werknemer">Toegekende Werknemer</label>
                             <div class="form-control"><?php echo $row['firstname_assigned']." ".$row['lastname_assigned'];?></div>
+                            <?php if($_SESSION['secure']>=1&& ($row['firstname_assigned']==""||$row['id_assigned']!=$_SESSION['id'])){
+                                echo "<button class='btn btn-default' type='submit' name='type' value='take_assignment'>Ticket aannemen</button>";
+                            }elseif($_SESSION['secure']==1&& $row['id_assigned']==$_SESSION['id']){
+                                echo "<button class='btn btn-default' type='submit' name='type' value='escaleren2'>Ticket escaleren2</button>";
+                            }elseif($_SESSION['secure']==2&& $row['id_assigned']==$_SESSION['id']){
+                                echo "<button class='btn btn-default' type='submit' name='type' value='escaleren3'>Ticket escaleren3</button>";
+                            }
+                             
+                             ?>
+                             
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="returned_assignment">Geef opdracht terug aan:</label>
+                            <select class="form-control" name="returned_assignment">
+                                <option value=""selected></option>
+                            <?php 
+                                $query_assigned="SELECT `users`.`firstname` AS `firstname`,
+                                 `users`.`lastname` AS `lastname`,
+                                 `users`.`id` AS `id` 
+                                 FROM `users`
+                                 LEFT JOIN `notifications` ON `notifications`.`user`=`users`.`id`
+                                 RIGHT JOIN `tickets` ON `notifications`.`ticket_id`=`tickets`.`id`
+                                 WHERE `notifications`.`ticket_id`='".$_POST['id']."' 
+                                    AND (`users`.`id`!=".$_SESSION['id']." 
+                                    AND `users`.`id`!=`tickets`.`creator`)
+                                 GROUP BY `users`.`id`
+                                 ORDER BY `notifications`.`creation_date` DESC";   
+                                 $result_assigned=mysqli_query($link, $query_assigned);
+                                 while($row_assigned=mysqli_fetch_assoc($result_assigned)){
+                                     echo "<option value='".$row_assigned['id']."' >".$row_assigned['firstname']." ".$row_assigned['lastname']."</option>";
+                                 }
+                            ?>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -203,7 +267,7 @@ if(!isset($_POST['id'])&&!isset($_SESSION['page_id'])){
                                 ORDER BY `creation_date` DESC";
                     $result=mysqli_query($link, $query);
                     while($row=mysqli_fetch_assoc($result)){
-                        echo comment($row['firstname']." ".$row['lastname'],$row['creation_date'],$row['type'],$row['content'],$_POST['id']).'<hr>';
+                        echo comment($row['firstname']." ".$row['lastname'],$row['creation_date'],$row['type'],$row['content'],$_POST['id'],$row['privacy']).'<hr>';
                     };?>
                     </div>
                     <div>

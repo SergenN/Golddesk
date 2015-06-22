@@ -34,11 +34,21 @@ ini_set('file_uploads', 'On');
  */
  $type=secure($_POST['type']);
  $title=secure($_POST['title']);
- $description=secure($_POST['description']);
+ $description=nl2br($_POST['comment']);
+ 
+ 
+
+ 
+ 
  if($type=="new"){
+    
+    $description = secure($_POST['description']);
+    
     $query ="INSERT INTO `tickets` (`title`,`creator`,`creation_time`,`description`,`status`) 
               VALUES ('".$title."','".$_SESSION['id']."',NOW(),'".$description."','1')";
     mysqli_query($link, $query);
+    
+    
     $query2;
     $query = "SELECT `id` FROM `tickets` WHERE `creator`='".$_SESSION['id']."' AND `description`='".$description."' ORDER BY `id` DESC LIMIT 1";
     $result=mysqli_query($link, $query);
@@ -65,7 +75,37 @@ ini_set('file_uploads', 'On');
     }
     header('location:index.php');
  }elseif($_POST['type']=="comment"){
-     $text = nl2br($_POST['comment']);
+     if(is_numeric($_POST['nieuw_status'])){
+        $query="UPDATE `tickets` 
+                    SET `status`='".$_POST['nieuw_status']."'
+                    WHERE `id`=".$_POST['id'];
+        mysqli_query($link, $query);
+        $query = "SELECT * FROM `status` WHERE `id`=".$_POST['nieuw_status'];
+        $results=mysqli_query($link, $query);
+        while($row=mysqli_fetch_assoc($results)){
+            $querya ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                        VALUES ('".$_SESSION['id']."',NOW(),'<i>STATUS GEWIJZIGD: ".$row['text']."</i>','info','0','".$_POST['id']."') ";
+            mysqli_query($link, $querya);
+        }
+     }
+     if(!empty($_POST['returned_assignment'])){
+         $query="UPDATE `tickets`
+                    SET `assigned`='".$_POST['returned_assignment']."'
+                    WHERE `id`='".$_POST['id']."'";
+        mysqli_query($link, $query);
+        if(!is_numeric($_POST['nieuw_status'])){
+            $query="UPDATE `tickets` 
+                    SET `status`=2
+                    WHERE `id`=".$_POST['id'];
+            mysqli_query($link, $query);
+        }
+        $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                        VALUES ('".$_SESSION['id']."',NOW(),'<i>TERUG NAAR VORIGE BEHANDELAAR</i>','info','0','".$_POST['id']."') ";
+        mysqli_query($link, $query);              
+     }
+     
+     
+     $text = secure($_POST['comment']);
             if(!empty($_FILES['file']['name'])){
                 $target_dir = "../files/".$_POST['id']."/";
                 $target_file = $target_dir . basename($_FILES["file"]["name"]);
@@ -128,12 +168,42 @@ ini_set('file_uploads', 'On');
     
      if(!empty($_POST['comment'])){
          $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
-                    VALUES ('".$_SESSION['id']."',NOW(),'".$text."','comment','".$_POST['secure']."','".$_POST['id']."') ";
+                    VALUES ('".$_SESSION['id']."',NOW(),'".$text."','comment','".$_POST['privacy']."','".$_POST['id']."') ";
          mysqli_query($link, $query);
          
      }
      $_SESSION['page_id']=$_POST['id'];
      header('location:ticket.php');
+ }elseif($_POST['type']=="take_assignment"){
+    $query= "UPDATE `tickets`
+                SET `assigned`='".$_SESSION['id']."', `status`='3'
+                WHERE `id`='".$_POST['id']."'";
+    mysqli_query($link, $query);
+    $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                    VALUES ('".$_SESSION['id']."',NOW(),'<i>TICKET GEACCEPTEERD</i>','info','0','".$_POST['id']."') ";
+    mysqli_query($link, $query);
+
+    $_SESSION['page_id']=$_POST['id'];
+    header('location:ticket.php');
+ }elseif($_POST['type']=="escaleren2"){
+    $query ="UPDATE `tickets`
+                SET `status`='8'
+                WHERE `id`='".$_POST['id']."'";
+    mysqli_query($link, $query);
+    $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                    VALUES ('".$_SESSION['id']."',NOW(),'<i>TICKET GE&Euml;SCALEERD naar lijn 2</i>','info','0','".$_POST['id']."') ";
+    $_SESSION['page_id']=$_POST['id'];
+    header('location:ticket.php');
+ }elseif($_POST['type']=="escaleren3"){
+    $query ="UPDATE `tickets`
+                SET `status`='9'
+                WHERE `id`='".$_POST['id']."'";
+    mysqli_query($link, $query);
+    $query ="INSERT INTO `notifications`(`user`,`creation_date`,`content`,`type`,`privacy`,`ticket_id`)
+                    VALUES ('".$_SESSION['id']."',NOW(),'<i>TICKET GE&Euml;SCALEERD naar lijn 3</i>','info','0','".$_POST['id']."') ";
+    $_SESSION['page_id']=$_POST['id'];
+    header('location:ticket.php');
  }
+ 
  
 ?>

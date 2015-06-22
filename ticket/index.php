@@ -25,6 +25,16 @@ include'../components/secure_header.php';
  *      dubbele waarde opgelost
  * 
  */
+ 
+ if(isset($_GET['showClosed'])){
+     $_SESSION['showClosed']=$_GET['showClosed'];
+ }elseif(isset($_SESSION['showClosed'])){
+     $_SESSION['showClosed']="TRUE";
+ }
+ 
+ 
+ 
+ 
 ?>
 <div class="col-md-3">
 
@@ -40,7 +50,14 @@ include'../components/secure_header.php';
     Op deze pagina kunt u uw tickets beheren, klik op een ticket voor meer 
     informatie en om commentaar te plaatsen
     <br>
-    <br>
+    <br>Weergeef geloten tickets 
+    <?php 
+    if($_GET['showClosed']=="FALSE"){
+        echo '<a href="index.php?showClosed=TRUE" class="btn btn-default navbar-right">aan</a>';
+    }else{
+        echo '<a href="index.php?showClosed=FALSE" class="btn btn-default navbar-right">uit</a>';
+    }
+    ?>
     <a href="ticket.php" class="btn btn-default navbar-right">Maak een nieuwe ticket aan</a>
 </div>
 <br>
@@ -78,15 +95,18 @@ include'../components/secure_header.php';
         $query = 
         "SELECT 
             `tickets`.`id` AS `id`,
-            `tickets`.`creation_time` as `creation_time`,
+            `tickets`.`creation_time` AS `creation_time`,
+            `tickets`.`assigned` AS `assigned_id`,
             `users`.`firstname` AS `firstname`,
             `users`.`lastname` AS `lastname`,
             `tickets`.`title` AS `title`,
             `status`.`text` AS `status`,
+            `tickets`.`status` AS `status_id`,
             (SELECT `notifications`.`creation_date`
                 FROM `notifications`
                 WHERE `notifications`.`ticket_id` = `tickets`.`id` 
                     AND `notifications`.`privacy`<='".$_SESSION['secure']."'
+                    AND `notifications`.`content`!='<i>TICKET AANGEMAAKT</i>' 
                 ORDER BY `creation_date` DESC
                 LIMIT 1)                AS `last_update`,
             (SELECT`users`.`firstname` 
@@ -94,6 +114,7 @@ include'../components/secure_header.php';
                 LEFT JOIN `notifications` ON `notifications`.`user`=`users`.`id` 
                 WHERE `users`.`id`=`notifications`.`user` AND `notifications`.`ticket_id`=`tickets`.`id`
                     AND `notifications`.`privacy`<='".$_SESSION['secure']."'
+                    AND `notifications`.`content`!='<i>TICKET AANGEMAAKT</i>'
                 ORDER BY `creation_date` DESC
                 LIMIT 1)    AS `firstname_comment`,
             (SELECT `users`.`lastname` 
@@ -101,6 +122,7 @@ include'../components/secure_header.php';
                 LEFT JOIN `notifications` ON `notifications`.`user`=`users`.`id` 
                 WHERE `users`.`id`=`notifications`.`user` AND `notifications`.`ticket_id`=`tickets`.`id`
                     AND `notifications`.`privacy`<='".$_SESSION['secure']."'
+                    AND `notifications`.`content`!='<i>TICKET AANGEMAAKT</i>'
                 ORDER BY `creation_date` DESC
                 LIMIT 1     )AS `lastname_comment`
             
@@ -108,20 +130,39 @@ include'../components/secure_header.php';
         LEFT JOIN `notifications` ON `notifications`.`ticket_id`=`tickets`.`id`
         LEFT JOIN `users` ON `tickets`.`creator`=`users`.`id`
         LEFT JOIN `status` ON `tickets`.`status`=`status`.`id`
-        WHERE `creator`='".$_SESSION['id']."' 
-            OR `assigned`='".$_SESSION['id']."' 
-            OR 1<=".$_SESSION['secure'];
+        WHERE "; 
+        if($_SESSION['showClosed']!="FALSE"){
+            $query .=" (`tickets`.`status`<>'7') AND ";
+        }
+        $query .= "(`creator`='".$_SESSION['id']."' 
+            OR `assigned`='".$_SESSION['id']."'"; 
+            
+        switch($_SESSION['secure']){
+        case 1: 
+            $query.= "OR (`tickets`.`status`<'8')";
+            break;
+        case 2:
+            $query.= "OR (`tickets`.`status`='8')";
+            break;
+        case 3:
+            $query.= "OR (`tickets`.`status`='9')";
+            break;
+        case 9:
+            $query.= "OR (1=1)";
+            break;
+        }
         if($_SESSION['secure']>=1){$query.=
             " OR `assigned`=0";}
-        $query.=" 
+        $query.=") 
         GROUP BY `id`
-        ORDER BY `last_update` DESC,`creation_date` DESC, `id` DESC 
+        ORDER BY `creation_time` DESC,`last_update` DESC,`creation_date` DESC, `id` DESC 
         LIMIT 10 OFFSET ".$offset;
+        
         $result = mysqli_query($link, $query);
         while($row=mysqli_fetch_assoc($result)){
-            if($row['status']=="Closed"){
+            if($row['status_id']==7){
                 echo "<tr class='active'>";
-            }elseif($row['assigned']==0){
+            }elseif($row['status_id']==1||($row['assigned_id']!=$_SESSION['id'])){
                 echo "<tr class='success'>";
             }else{
                 echo "<tr>";
@@ -139,6 +180,7 @@ include'../components/secure_header.php';
                     </tr>";
             
         }
+        
         ?>
         
     </table>
@@ -149,8 +191,18 @@ include'../components/secure_header.php';
 
 <?php 
     
-    $query = "SELECT COUNT(*) AS 'counted' FROM `tickets` WHERE `creator`='".$_SESSION['id']."' OR `assigned`='".$_SESSION['id']."' OR 1<=".$_SESSION['secure'];
+    $query = "SELECT COUNT(*) AS 'counted' FROM `tickets` 
+        WHERE ("; 
+        if($_SESSION['showClosed']!="FALSE"){
+            $query .="`tickets`.`status`<>'7') AND (";
+        }
+            $query .= "`creator`='".$_SESSION['id']."' 
+            OR `assigned`='".$_SESSION['id']."' 
+            OR 1<=".$_SESSION['secure'];
         if($_SESSION['secure']>=1){$query.=" OR `assigned`=0";}
+        
+        $query .=")";
+        
     $result=mysqli_query($link, $query);
     while($row=mysqli_fetch_assoc($result)){
         $pages=floor($row['counted']/10)+1;
