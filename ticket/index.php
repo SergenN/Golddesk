@@ -140,7 +140,7 @@ include'../components/secure_header.php';
 
 
 <?php 
-    echo $query;
+    
     $query = "SELECT COUNT(*) AS 'counted' FROM `tickets` WHERE `creator`='".$_SESSION['id']."' OR `assigned`='".$_SESSION['id']."' OR 1<=".$_SESSION['secure'];
         if($_SESSION['secure']>=1){$query.=" OR `assigned`=0";}
     $result=mysqli_query($link, $query);
