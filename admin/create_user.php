@@ -20,27 +20,28 @@ include'../components/header.php';
 <html>
 	<body>
 		<div class="container">
-			<form>
+			<form action="new_user.php" method="post">
 				<div class="col-md-6">
 					  <div class="form-group">
-						<label for="InputUsername">Gebruikersnaam</label>
-						<input type="text" class="form-control" id="InputUsername" placeholder="Gebruikersnaam">
+						<label for="InputUsername">Gebruikersnaam*</label>
+						<input type="text" class="form-control" id="InputUsername" placeholder="Gebruikersnaam" required>
 					  </div>
 					  <div class="form-group">
-						<label for="InputName">Voornaam</label>
+						<label for="InputName">Voornaam*</label>
 						<input type="text" class="form-control" id="InputName" placeholder="Voornaam">
 					  </div>
 					  <div class="form-group">
-						<label for="InputSurname">Achternaam</label>
+						<label for="InputSurname">Achternaam*</label>
 						<input type="text" class="form-control" id="InputSurname" placeholder="Achternaam">
 					  </div>
 					  <div class="form-group">
-						<label for="InputEmail">E-mailadres</label>
-						<input type="email" class="form-control" id="InputEmail" placeholder="E-mailadres">
+						<label for="InputEmail">E-mailadres*</label>
+						<input type="email" class="form-control" id="InputEmail" placeholder="E-mailadres" required>
 					  </div>
 					  <div class="form-group">
-						<label for="InputCompany">Company</label>
+						<label for="InputCompany">Bedrijf</label>
 							<select class="form-control">
+                                <option value="0">Kies een bedrijf</option>
 								<?php
 									// onderstaande query graag in een ander bestand stoppen
 									$sql = "SELECT name, id FROM companies ORDER BY id";
@@ -69,15 +70,25 @@ include'../components/header.php';
 					  </div>
 					  <div class="form-group">
 						<label for="InputSupervisor">Supervisor</label>
-						<input type="number" class="form-control" id="InputSupervisor">
+                          <select class="form-control">
+                              <option value="1">Kies een supervisor</option>
+                              <?php
+                              // onderstaande query graag in een ander bestand stoppen
+                              $sql = "SELECT name, id FROM users ORDER BY id";
+                              $result = mysqli_query($link, $sql);
+                              while ($row = mysqli_fetch_assoc($result)) {
+                                  echo '<option value=' . $row["id"] . '>' . $row["name"] . ' (' . $row["id"] . ')</option>';
+                              }
+                              ?>
+                          </select>
 					  </div>
 					  <div class="form-group">
 						<label for="InputPassword">Wachtwoord</label>
-						<input type="password" class="form-control" id="InputPassword" placeholder="Wachtwoord">
+						<input type="password" class="form-control" id="InputPassword" placeholder="Wachtwoord" required>
 					  </div>
 						<div class="form-group">
 						<label for="SecondInputPassword">Wachtwoord herhalen</label>
-						<input type="password" class="form-control" id="SecondInputPassword" placeholder="Wachtwoord">
+						<input type="password" class="form-control" id="SecondInputPassword" placeholder="Wachtwoord" required>
 					  </div>
 					  <button type="submit" class="btn btn-default">Gebruiker toevoegen</button>
 				</div>
