@@ -15,6 +15,7 @@
 session_start();
 $title = "Gebruiker toevoegen";
 include'../components/header.php';
+$secure = 9;
 // hier een include naar bestand waar gegevens worden opgehaald
 $foutmeldingen = array();
 
@@ -76,15 +77,18 @@ if(!empty($supervisor)) {
 
 if(empty($wachtwoord) || empty($wachtwoord2) || strcmp($wachtwoord, $wachtwoord2) !== 0) {
     $foutmeldingen[] = "Het wachtwoord ontbreekt en/of de ingevoerde wachtwoorden komen niet overeen.";
+    $check = 0;
 } else {
     $wachtwoord = mysqli_real_escape_string($link, $wachtwoord);
     $wachtwoord = md5($wachtwoord);
+    $check = 1;
 }
 
 // query die data in de db moet zetten
-$sql = "INSERT INTO users (name, password, last_login, email, company, function, level, supervisor, firstname, lastname)
-VALUES ('$username', '$wachtwoord', null, '$email', '$company', '$function', '$level', '$supervisor', '$name', '$surname')";
-
+if($check) {
+    $sql = "INSERT INTO users (name, password, last_login, email, company, function, level, supervisor, firstname, lastname)
+	VALUES ('$username', '$wachtwoord', null, '$email', '$company', '$function', '$level', '$supervisor', '$name', '$surname')";
+}
 ?>
 
 <html>
@@ -93,8 +97,10 @@ VALUES ('$username', '$wachtwoord', null, '$email', '$company', '$function', '$l
     <?php
     if (mysqli_query($link, $sql)) {
         echo "Gebruiker toevoegen geslaagd!";
-    } else {
+    } elseif(!empty($foutmeldingen)) {
         echo "Er is iets fout gegaan:";
+    } else {
+        echo "Er is iets fout gegaan tijdens het afhandelen van het toevoegen van de gebruiker.";
     }
     ?>
 </h1>
