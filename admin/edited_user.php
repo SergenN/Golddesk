@@ -132,7 +132,7 @@ foreach($foutmeldingen as $foutmelding) {
 }
 
 if($check) {
-    echo 'Keer terug naar de <a href="admin/index.php">homepagina</a>.';
+    echo 'Keer terug naar de <a href="user_overview.php">homepagina</a>.';
 }
 ?>
 </body>

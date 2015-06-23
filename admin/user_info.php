@@ -58,7 +58,11 @@ $secure = 9;
                 $sql = "SELECT last_login FROM users WHERE id = $id ";
                 $result = mysqli_query($link, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo $row["last_login"];
+                    if(!$row["last_login"]) {
+                        $login = "Nog nooit ingelogd";
+                    } else {
+                        $login = $row["last_login"];
+                    }
                 }
                 ?>
             </td>
@@ -93,6 +97,9 @@ $secure = 9;
 
     <form>
         <button class="btn btn-default" type="submit" formmethod="post" formaction="edit_user.php" name="user_data" value="<?php echo $id; ?>">Gegevens aanpassen</button>
+    </form>
+    <form>
+        <button class="btn btn-default" type="submit" formmethod="post" formaction="delete_user.php" name="user_data" value="<?php echo $id; ?>">Gebruiker verwijderen</button>
     </form>
 </div>
 

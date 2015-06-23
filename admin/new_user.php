@@ -111,7 +111,7 @@ foreach($foutmeldingen as $foutmelding) {
 }
 
 if($check) {
-    echo 'Keer terug naar de <a href="admin/index.php">homepagina</a>, of voeg nog een gebruiker <a href="admin/create_user.php">toe</a>.';
+    echo 'Keer terug naar de <a href="user_overview.php">homepagina</a>, of voeg nog een gebruiker <a href="create_user.php">toe</a>.';
 }
 ?>
 </body>

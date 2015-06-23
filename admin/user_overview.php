@@ -22,33 +22,33 @@ $secure = 9;
         if (mysqli_num_rows($result) > 0) {
             // maak een html-tabel aan
             ?>
-            <form method="get">
-                <table>
-                    <th>ID</th>
-                    <th>Naam</th>
-                    <th>E-mailadres</th>
-                    <th>Laatst ingelogd op</th>
-                    <th>Extra</th>
-                    <?php
-                    // per rij data weergeven
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        // hier data weergeven in tabel
-                        if(!$row["last_login"]) {
-                            $login = "Nog nooit ingelogd";
-                        } else {
-                            $login = $row["last_login"];
-                        }
-                        echo '<tr>';
-                        echo '<td>' . $row["id"] . '</td>';
-                        echo '<td>' . $row["name"] . '</td>';
-                        echo '<td>' . $row["email"] . 'a</td>';
-                        echo '<td>' . $login . '</td>';
-                        echo '<td><button class="btn btn-default" type="submit" formmethod="get" formaction="user_info.php" name="user_info" value=' . $row["id"] . '>Meer informatie</button></td>';
-                        echo '</tr>';
+            <table>
+                <th>ID</th>
+                <th>Gebruikersnaam</th>
+                <th>E-mailadres</th>
+                <th>Laatst ingelogd op</th>
+                <th>Extra</th>
+                <th>Verwijderen</th>
+                <?php
+                // per rij data weergeven
+                while ($row = mysqli_fetch_assoc($result)) {
+                    // hier data weergeven in tabel
+                    if(!$row["last_login"]) {
+                        $login = "Nog nooit ingelogd";
+                    } else {
+                        $login = $row["last_login"];
                     }
-                    ?>
-                </table>
-            </form>
+                    echo '<tr>';
+                    echo '<td>' . $row["id"] . '</td>';
+                    echo '<td>' . $row["name"] . '</td>';
+                    echo '<td>' . $row["email"] . '</td>';
+                    echo '<td>' . $login . '</td>';
+                    echo '<td><form method="get"><button class="btn btn-default" type="submit" formmethod="get" formaction="user_info.php" name="user_info" value=' . $row["id"] . '>Meer informatie</button></form></td>';
+                    echo '<td><form method="post"><button class="btn btn-default" type="submit" formmethod="post" formaction="delete_user.php" name="user_info" value=' . $row["id"] . '>Gebruiker verwijderen</button></form></td>';
+                    echo '</tr>';
+                }
+                ?>
+            </table>
         <?php
         } else {
             // er zijn geen gebruikers gevonden
