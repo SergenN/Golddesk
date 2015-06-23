@@ -5,27 +5,16 @@
  * Date: 19-6-2015
  * Time: 13:19
  */
-
-/**
- * Changelog
- *
- * 19-6-2015 13.00 uur: bestand aangemaakt
- * 19-6-2015 13.27 uur: functies toegevoegd
- * 19-6-2015 13.58 uur: kleine aanpassingen
- * 19-6-2015 15.17 uur: aanpassingen aan entiteiten gemaakt
- * 19-6-2015 16.02 uur: aanpassingen gemaakt m.b.t. Meer Informatie-optie
- * 20-6-2015 11.17 uur: link voor het toevoegen van gebruikers veranderd in knop
- */
 session_start();
 $title = "Gebruikersoverzicht";
 include'../components/header.php';
+$secure = 9;
 // hier een include naar bestand waar gegevens worden opgehaald
 ?>
 
 <h1>Gebruikersoverzicht<h1>
         <!-- Knop naar pagina voor het toevoegen van een gebruiker -->
-        <button class="btn btn-default" href="create_user.php">Nieuwe gebruiker toevoegen</button>
-
+        <a href="create_user.php">Nieuwe gebruiker toevoegen</a>
         <?php
         $sql = "SELECT id, name, email, last_login FROM users";
         $result = mysqli_query($link, $sql);
@@ -33,13 +22,13 @@ include'../components/header.php';
         if (mysqli_num_rows($result) > 0) {
             // maak een html-tabel aan
             ?>
-            <form>
+            <form method="get">
                 <table>
                     <th>ID</th>
                     <th>Naam</th>
                     <th>E-mailadres</th>
                     <th>Laatst ingelogd op</th>
-                    <th>Opties</th>
+                    <th>Extra</th>
                     <?php
                     // per rij data weergeven
                     while ($row = mysqli_fetch_assoc($result)) {
@@ -54,7 +43,7 @@ include'../components/header.php';
                         echo '<td>' . $row["name"] . '</td>';
                         echo '<td>' . $row["email"] . 'a</td>';
                         echo '<td>' . $login . '</td>';
-                        echo '<td><button class="btn btn-default" type="submit" formmethod="post" formaction="user_info.php" name="user_info" value=' . $row["id"] . '>Meer informatie</button></td>';
+                        echo '<td><button class="btn btn-default" type="submit" formmethod="get" formaction="user_info.php" name="user_info" value=' . $row["id"] . '>Meer informatie</button></td>';
                         echo '</tr>';
                     }
                     ?>

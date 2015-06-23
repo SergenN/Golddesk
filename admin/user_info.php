@@ -18,6 +18,7 @@ session_start();
 $id = $_GET["user_info"];
 $title = "Gebruiker " . $id;
 include'../components/header.php';
+$secure = 9;
 // hier een include naar bestand waar gegevens worden opgehaald
 ?>
 
@@ -29,11 +30,18 @@ include'../components/header.php';
             <td><strong>Naam</strong></td>
             <td>
                 <?php
+                $hasName = 0;
                 // onderstaande query graag in een ander bestand stoppen
                 $sql = "SELECT firstname, lastname FROM users WHERE id = $id ";
                 $result = mysqli_query($link, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
-                    echo mysqli_real_escape_string($link, $row["firstname"]) . " " . mysqli_real_escape_string($link,$row["lastname"]);
+                    echo $row["firstname"] . " " . $row["lastname"];
+                    if(!empty($row["firstname"]) && !empty($row["lastname"])) {
+                        $hasName = 1;
+                    }
+                }
+                if(!$hasName) {
+                    echo "Naam onbekend";
                 }
                 ?>
             </td>
@@ -84,7 +92,7 @@ include'../components/header.php';
     </table>
 
     <form>
-        <button class="btn btn-default" type="submit" formmethod="post" formaction="user_data.php" name="user_data" value="<?php echo $id; ?>">Gegevens aanpassen</button>
+        <button class="btn btn-default" type="submit" formmethod="post" formaction="edit_user.php" name="user_data" value="<?php echo $id; ?>">Gegevens aanpassen</button>
     </form>
 </div>
 

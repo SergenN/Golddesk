@@ -12,7 +12,7 @@
  * 19-6-2015 16.03 uur: bestand aangemaakt
  */
 session_start();
-$title = "Gebruiker toevoegen";
+$title = "Gebruiker bewerken";
 include'../components/header.php';
 $secure = 9;
 // hier een include naar bestand waar gegevens worden opgehaald
@@ -29,15 +29,15 @@ $secure = 9;
             </div>
             <div class="form-group">
                 <label for="InputName">Voornaam*</label>
-                <input type="text" class="form-control" id="InputName" name="InputName" placeholder="Voornaam">
+                <input type="text" class="form-control" id="InputName" name="InputName" placeholder="Wouter">
             </div>
             <div class="form-group">
                 <label for="InputSurname">Achternaam*</label>
-                <input type="text" class="form-control" id="InputSurname" name="InputSurname" placeholder="Achternaam">
+                <input type="text" class="form-control" id="InputSurname" name="InputSurname"  placeholder="Goudheuvel">
             </div>
             <div class="form-group">
                 <label for="InputEmail">E-mailadres*</label>
-                <input type="email" class="form-control" id="InputEmail" name="InputEmail" placeholder="E-mailadres" required>
+                <input type="email" class="form-control" id="InputEmail" name="InputEmail" placeholder="Functie" required>
             </div>
             <div class="form-group">
                 <label for="InputCompany">Bedrijf</label>
@@ -45,7 +45,7 @@ $secure = 9;
                     <option value="0">Kies een bedrijf</option>
                     <?php
                     // onderstaande query graag in een ander bestand stoppen
-                    $sql = "SELECT name, id FROM companies ORDER BY id";
+                    $sql = "SELECT name, id FROM companies WHERE id = $id";
                     $result = mysqli_query($link, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo '<option value=' . $row["id"] . '>' . $row["name"] . ' (' . $row["id"] . ')</option>';
@@ -75,7 +75,7 @@ $secure = 9;
                     <option value="1">Kies een supervisor</option>
                     <?php
                     // onderstaande query graag in een ander bestand stoppen
-                    $sql = "SELECT name, id FROM users ORDER BY id";
+                    $sql = "SELECT name, id FROM users WHERE id = $id";
                     $result = mysqli_query($link, $sql);
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo '<option value=' . $row["id"] . '>' . $row["name"] . ' (' . $row["id"] . ')</option>';
