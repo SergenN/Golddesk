@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5f2b02d-9ab3-48e2-8a93-75bcddc96013" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/create_user.php" afterPath="$PROJECT_DIR$/admin/create_user.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/new_user.php" afterPath="$PROJECT_DIR$/admin/new_user.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/user_info.php" afterPath="$PROJECT_DIR$/admin/user_info.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/admin/user_overview.php" afterPath="$PROJECT_DIR$/admin/user_overview.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Golddesk.iws" />
@@ -363,7 +359,13 @@
       <option name="project" value="LOCAL" />
       <updated>1434985490906</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Grote wijzigingen rond admin panel voor gebruikers&#10;&#10;Admin kan nu gebruikers toevoegen en bewerken">
+      <created>1435053549820</created>
+      <option name="number" value="00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1435053549820</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -414,7 +416,8 @@
     <MESSAGE value="Bijwerken van user_overview, toevoegen van user_info&#10;&#10;Pagina's bijgewerkt. Qua styling moet er nog wat gedaan worden, maar de functionaliteit is er." />
     <MESSAGE value="user_info bijgewerkt&#10;&#10;Paar kleine wijzigingen" />
     <MESSAGE value="new_user toegevoegd&#10;&#10;Moet nog gecontroleerd worden etc." />
-    <option name="LAST_COMMIT_MESSAGE" value="new_user toegevoegd&#10;&#10;Moet nog gecontroleerd worden etc." />
+    <MESSAGE value="Grote wijzigingen rond admin panel voor gebruikers&#10;&#10;Admin kan nu gebruikers toevoegen en bewerken" />
+    <option name="LAST_COMMIT_MESSAGE" value="Grote wijzigingen rond admin panel voor gebruikers&#10;&#10;Admin kan nu gebruikers toevoegen en bewerken" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
