@@ -42,7 +42,7 @@ if(!empty($username)) {
 if(!empty($name)) {
     $name = mysqli_real_escape_string($link, ucfirst(trim($name)));
 } else {
-    $foutmeldingen[] = "Voornaam ontbreekt en/of ongeldig.";
+   $foutmeldingen[] = "Voornaam ontbreekt en/of ongeldig.";
 }
 
 if(!empty($surname)) {
@@ -77,42 +77,42 @@ if(!empty($supervisor)) {
 
 if(empty($wachtwoord) || empty($wachtwoord2) || strcmp($wachtwoord, $wachtwoord2) !== 0) {
     $foutmeldingen[] = "Het wachtwoord ontbreekt en/of de ingevoerde wachtwoorden komen niet overeen.";
-    $check = 0;
+	$check = 0;
 } else {
     $wachtwoord = mysqli_real_escape_string($link, $wachtwoord);
-    $wachtwoord = md5($wachtwoord);
-    $check = 1;
+	$wachtwoord = md5($wachtwoord);
+	$check = 1;
 }
 
 // query die data in de db moet zetten
 if($check) {
-    $sql = "INSERT INTO users (name, password, last_login, email, company, function, level, supervisor, firstname, lastname)
+	$sql = "INSERT INTO users (name, password, last_login, email, company, function, level, supervisor, firstname, lastname)
 	VALUES ('$username', '$wachtwoord', null, '$email', '$company', '$function', '$level', '$supervisor', '$name', '$surname')";
 }
 ?>
 
 <html>
-<body>
-<h1>
-    <?php
-    if (mysqli_query($link, $sql)) {
-        echo "Gebruiker toevoegen geslaagd!";
-    } elseif(!empty($foutmeldingen)) {
-        echo "Er is iets fout gegaan:";
-    } else {
-        echo "Er is iets fout gegaan tijdens het toevoegen van een gebruiker.";
-    }
-    ?>
-</h1>
-<?php
-
-foreach($foutmeldingen as $foutmelding) {
-    echo "- " . $foutmelding . "<br>";
-}
-
-if($check) {
-    echo 'Keer terug naar de <a href="user_overview.php">homepagina</a>, of voeg nog een gebruiker <a href="create_user.php">toe</a>.';
-}
-?>
-</body>
+    <body>
+        <h1>
+            <?php
+                if (mysqli_query($link, $sql)) {
+                    echo "Gebruiker toevoegen geslaagd!";
+                } elseif(!empty($foutmeldingen)) {
+					echo "Er is iets fout gegaan:";
+				} else {
+                    echo "Er is iets fout gegaan tijdens het toevoegen van een gebruiker.";
+                }
+            ?>
+        </h1>
+        <?php
+		
+        foreach($foutmeldingen as $foutmelding) {
+            echo "- " . $foutmelding . "<br>";
+        }
+		
+		if($check) { 
+			echo 'Keer terug naar de <a href="user_overview.php">homepagina</a>, of voeg nog een gebruiker <a href="create_user.php">toe</a>.';
+		}
+		?>
+    </body>
 </html>

@@ -59,7 +59,7 @@ $secure = 9;
             <div class="form-group">
                 <label for="InputCompany">Bedrijf</label>
                 <select class="form-control" name="InputCompany">
-                    <option value="0">Scholengemeenschap De Hondsrug (0)</option>
+					<option value="0">Scholengemeenschap De Hondsrug (0)</option>
                     <?php
                     // onderstaande query graag in een ander bestand stoppen
                     $sql = "SELECT name, id FROM companies ORDER BY id";

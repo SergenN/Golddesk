@@ -24,26 +24,26 @@ $result = mysqli_query($link, $sql);
 ?>
 
 <html>
-<body>
-<div>
-    <h1>
-        <?php
-        if($result) {
-            echo "Gebruiker verwijderen geslaagd!";
-        } else {
-            echo "Gebruiker verwijderen mislukt";
-        }
-        ?>
-    </h1>
-    <p>
-        <?php
-        if($result) {
-            echo 'Keer terug naar de <a href="user_overview.php">homepagina</a>.';
-        } else {
-            echo 'Probeer het later opnieuw. Keer terug naar de <a href="user_overview.php">homepagina</a>.';
-        }
-        ?>
-    </p>
-</div>
-</body>
+	<body>
+		<div>
+			<h1>
+			<?php
+			if($result) {
+				echo "Gebruiker verwijderen geslaagd!";
+			} else {
+				echo "Gebruiker verwijderen mislukt";
+			}
+			?>
+			</h1>
+			<p>
+			<?php
+				if($result) { 
+					echo 'Keer terug naar de <a href="user_overview.php">homepagina</a>.';
+				} else {
+					echo 'Probeer het later opnieuw. Keer terug naar de <a href="user_overview.php">homepagina</a>.';
+				}
+			?>
+			</p>
+		</div>
+	</body>
 </html>
